@@ -1,14 +1,22 @@
 import './App.css';
+import ChatEntry from './components/ChatEntry';
+import messagesData from './data/messages.json';
+
 
 const App = () => {
+  const firstMsgData = messagesData[0];
+
   return (
     <div id="App">
       <header>
         <h1>Application title</h1>
       </header>
       <main>
-        {/* Wave 01: Render one ChatEntry component
-        Wave 02: Render ChatLog component */}
+        <ChatEntry
+          sender={firstMsgData.sender}
+          body={firstMsgData.body}
+          timeStamp={firstMsgData.timeStamp}>
+        </ChatEntry>
       </main>
     </div>
   );
