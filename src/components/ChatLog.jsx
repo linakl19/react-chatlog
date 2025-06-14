@@ -2,7 +2,7 @@ import ChatEntry from './ChatEntry';
 import './ChatLog.css';
 import PropTypes from 'prop-types';
 
-const ChatLog = ({ entries }) => {
+const ChatLog = ({ entries, onToggleHeart }) => {
   const chatEntryComponents = entries.map((entry) => {
     return (
       <ChatEntry
@@ -12,6 +12,7 @@ const ChatLog = ({ entries }) => {
         body={entry.body}
         timeStamp={entry.timeStamp}
         liked={entry.liked}
+        onToggleLike= {onToggleHeart}
       ></ChatEntry>
     );
   });
@@ -32,7 +33,8 @@ ChatLog.propTypes = {
       timeStamp: PropTypes.string.isRequired,
       liked: PropTypes.bool.isRequired,
     })
-  )
+  ),
+  onToggleHeart: PropTypes.func.isRequired,
 };
 
 export default ChatLog;
