@@ -1,11 +1,25 @@
 import './App.css';
 // import ChatEntry from './components/ChatEntry';
 import ChatLog from './components/ChatLog';
-import messagesData from './data/messages.json';
+import DATA from './data/messages.json';
+import { useState } from 'react';
 
 
 const App = () => {
-  // const firstMsgData = messagesData[0];
+  const [entryData, setEntryData] = useState(DATA);
+  // const firstMsgData = DATA[0];
+
+  const updateEntryLikedState = (entryId) => {
+    setEntryData(entries => {
+      return entries.map(entry => {
+        if (entry.id === entryId) {
+          return { ...entry, liked: !entry.liked };
+        } else {
+          return entry;
+        }
+      });
+    });
+  };
 
   return (
     <div id="App">
@@ -20,7 +34,10 @@ const App = () => {
           timeStamp={firstMsgData.timeStamp}>
         </ChatEntry>
         */}
-        <ChatLog entries={messagesData} />
+        <ChatLog
+          entries={entryData}
+          onToggleHeart={updateEntryLikedState}
+        />
       </main>
     </div>
   );
