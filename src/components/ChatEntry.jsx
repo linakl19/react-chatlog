@@ -3,8 +3,10 @@ import TimeStamp from './TimeStamp';
 import PropTypes from 'prop-types';
 
 const ChatEntry = ({ id, sender, body, timeStamp, liked, onToggleLike }) => {
+  const entryClass = id % 2 === 1 ? 'chat-entry local' : 'chat-entry remote';
+
   return (
-    <div className="chat-entry local">
+    <div className={entryClass}>
       <h2 className="entry-name">{sender}</h2>
       <section className="entry-bubble">
         <p>{body}</p>
