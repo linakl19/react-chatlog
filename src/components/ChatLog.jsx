@@ -2,8 +2,10 @@ import ChatEntry from './ChatEntry';
 import './ChatLog.css';
 import PropTypes from 'prop-types';
 
-const ChatLog = ({ entries, onToggleHeart, chatLocalColor, chatRemoteColor}) => {
+const ChatLog = ({ entries, onToggleHeart, chatLocalColor, chatRemoteColor, localSender}) => {
   const chatEntryComponents = entries.map((entry) => {
+    const isLocal = entry.sender === localSender;
+    const chatColor = isLocal ? chatLocalColor : chatRemoteColor;
     return (
       <ChatEntry
         key={entry.id}
@@ -13,8 +15,8 @@ const ChatLog = ({ entries, onToggleHeart, chatLocalColor, chatRemoteColor}) => 
         timeStamp={entry.timeStamp}
         liked={entry.liked}
         onToggleLike={onToggleHeart}
-        chatLocalColor={chatLocalColor}
-        chatRemoteColor={chatRemoteColor}
+        isLocal={isLocal}
+        chatColor={chatColor}
       ></ChatEntry>
     );
   });
@@ -38,7 +40,8 @@ ChatLog.propTypes = {
   ),
   onToggleHeart: PropTypes.func.isRequired,
   chatLocalColor: PropTypes.string.isRequired,
-  chatRemoteColor: PropTypes.string.isRequired
+  chatRemoteColor: PropTypes.string.isRequired,
+  localSender: PropTypes.string.isRequired
 };
 
 export default ChatLog;
