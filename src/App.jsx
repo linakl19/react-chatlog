@@ -1,12 +1,42 @@
 import './App.css';
 // import ChatEntry from './components/ChatEntry';
 import ChatLog from './components/ChatLog';
+import ColorChoice from './components/ColorChoice';
 import DATA from './data/messages.json';
 import { useState } from 'react';
 
+const colorDataArr = [
+  {
+    id: 'local',
+    name: DATA[0].sender,
+    chatColor: 'green',
+  },
+  {
+    id: 'remote',
+    name: DATA[1].sender,
+    chatColor: 'blue',
+  }
+];
+
 const App = () => {
-  const [entryData, setEntryData] = useState(DATA);
   // const firstMsgData = DATA[0];
+  const [entryData, setEntryData] = useState(DATA);
+  const [colorData, setColorData] = useState(colorDataArr);
+
+  const localSender = entryData[0].sender;
+  const remoteSender = entryData[1].sender;
+
+  const handleColorChange = (senderId, color) => {
+    setColorData(senders => {
+      return senders.map(sender => {
+        if (sender.id === senderId) {
+          return { ...sender, chatColor: color };
+        } else {
+          return sender;
+        }
+      });
+    });
+  };
 
   const updateEntryLikedState = (entryId) => {
     setEntryData(entries => {
@@ -20,15 +50,6 @@ const App = () => {
     });
   };
 
-  //////////////////////////
-  // CALCULATE TOTAL LIKES//
-  /////////////////////////
-  // let totalLikes = 0;
-  // for (const entry of entryData) {
-  //   if (entry.liked) {
-  //     totalLikes += 1;
-  //   }
-  // }
   const totalLikes = entryData.reduce((sum, entry) => {
     return entry.liked ? sum + 1 : sum;
   }, 0);
@@ -36,9 +57,15 @@ const App = () => {
   return (
     <div id="App">
       <header>
-        <h1>Chat Between {entryData[0].sender} and {entryData[1].sender} </h1>
+        <h1>Chat Between{' '}
+          <span className={colorData[0].chatColor}>{localSender}</span>{' '}
+          and{' '}
+          <span className={colorData[1].chatColor}>{remoteSender}</span>
+        </h1>
         <section>
+          <ColorChoice senderData={colorData[0]} setColorCallback={handleColorChange} />
           <span id='heartWidget' className='widget'>{totalLikes} ❤️s</span>
+          <ColorChoice senderData={colorData[1]} setColorCallback={handleColorChange} />
         </section>
       </header>
       <main>
@@ -51,6 +78,7 @@ const App = () => {
         */}
         <ChatLog
           entries={entryData}
+          colorData={colorData}
           onToggleHeart={updateEntryLikedState}
         />
       </main>
