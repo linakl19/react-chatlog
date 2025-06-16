@@ -10,6 +10,7 @@ button {
 
 .chat-entry {
   margin: 1rem;
+  font-size: 1.1rem;
 }
 
 .chat-entry:last-child {
@@ -31,13 +32,14 @@ button {
 }
 
 .chat-entry .entry-name {
-  font-size: medium;
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  color: whitesmoke;
 }
 
 .chat-entry .entry-time {
   color: #bbb;
-  font-size: x-small;
+  font-size: small;
   margin-bottom: 0.1rem;
   margin-right: 0.5rem;
 }

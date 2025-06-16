@@ -1,0 +1,11 @@
+label {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+select {
+    margin-left: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
