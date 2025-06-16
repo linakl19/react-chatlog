@@ -1,41 +1,25 @@
-import './App.css';
 // import ChatEntry from './components/ChatEntry';
+import './App.css';
 import ChatLog from './components/ChatLog';
 import ColorChoice from './components/ColorChoice';
 import DATA from './data/messages.json';
 import { useState } from 'react';
 
-const colorDataArr = [
-  {
-    id: 'local',
-    name: DATA[0].sender,
-    chatColor: 'green',
-  },
-  {
-    id: 'remote',
-    name: DATA[1].sender,
-    chatColor: 'blue',
-  }
-];
-
 const App = () => {
-  // const firstMsgData = DATA[0];
   const [entryData, setEntryData] = useState(DATA);
-  const [colorData, setColorData] = useState(colorDataArr);
+  const [localColor, setLocalColor] = useState('green');
+  const [remoteColor, setRemoteColor] = useState('blue');
+  // const firstMsgData = DATA[0];
 
-  const localSender = entryData[0].sender;
-  const remoteSender = entryData[1].sender;
+  const LOCAL_SENDER = entryData[0].sender;
+  const REMOTE_SENDER = entryData[1].sender;
 
-  const handleColorChange = (senderId, color) => {
-    setColorData(senders => {
-      return senders.map(sender => {
-        if (sender.id === senderId) {
-          return { ...sender, chatColor: color };
-        } else {
-          return sender;
-        }
-      });
-    });
+  const handleColorChange = (sender, color) => {
+    if (sender === LOCAL_SENDER){
+      setLocalColor(color);
+    } else if (sender === REMOTE_SENDER) {
+      setRemoteColor(color);
+    }
   };
 
   const updateEntryLikedState = (entryId) => {
@@ -58,16 +42,18 @@ const App = () => {
     <div id="App">
       <header>
         <h1>Chat Between{' '}
-          <span className={colorData[0].chatColor}>{localSender}</span>{' '}
+          <span className={localColor}>{LOCAL_SENDER}</span>{' '}
           and{' '}
-          <span className={colorData[1].chatColor}>{remoteSender}</span>
+          <span className={remoteColor}>{REMOTE_SENDER}</span>
         </h1>
+
         <section>
-          <ColorChoice senderData={colorData[0]} setColorCallback={handleColorChange} />
+          <ColorChoice sender={LOCAL_SENDER} chatColor={localColor} setColorCallback={handleColorChange} />
           <span id='heartWidget' className='widget'>{totalLikes} ❤️s</span>
-          <ColorChoice senderData={colorData[1]} setColorCallback={handleColorChange} />
+          <ColorChoice sender={REMOTE_SENDER} chatColor={remoteColor} setColorCallback={handleColorChange} />
         </section>
       </header>
+
       <main>
         {/* Display Single Msg - WAVE 1
         <ChatEntry
@@ -78,8 +64,9 @@ const App = () => {
         */}
         <ChatLog
           entries={entryData}
-          colorData={colorData}
           onToggleHeart={updateEntryLikedState}
+          chatLocalColor={localColor}
+          chatRemoteColor={remoteColor}
         />
       </main>
     </div>
