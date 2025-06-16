@@ -1,4 +1,3 @@
-// import ChatEntry from './components/ChatEntry';
 import './App.css';
 import ChatLog from './components/ChatLog';
 import ColorChoice from './components/ColorChoice';
@@ -9,7 +8,6 @@ const App = () => {
   const [entryData, setEntryData] = useState(DATA);
   const [localColor, setLocalColor] = useState('green');
   const [remoteColor, setRemoteColor] = useState('blue');
-  // const firstMsgData = DATA[0];
 
   const LOCAL_SENDER = entryData[0].sender;
   const REMOTE_SENDER = entryData[1].sender;
@@ -55,13 +53,6 @@ const App = () => {
       </header>
 
       <main>
-        {/* Display Single Msg - WAVE 1
-        <ChatEntry
-          sender={firstMsgData.sender}
-          body={firstMsgData.body}
-          timeStamp={firstMsgData.timeStamp}>
-        </ChatEntry>
-        */}
         <ChatLog
           entries={entryData}
           onToggleHeart={updateEntryLikedState}
