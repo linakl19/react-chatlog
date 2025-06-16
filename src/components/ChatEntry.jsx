@@ -2,14 +2,16 @@ import './ChatEntry.css';
 import TimeStamp from './TimeStamp';
 import PropTypes from 'prop-types';
 
-const ChatEntry = ({ id, sender, body, timeStamp, liked, onToggleLike }) => {
-  const entryClass = id % 2 === 1 ? 'chat-entry local' : 'chat-entry remote';
+const ChatEntry = ({ id, sender, body, timeStamp, liked, onToggleLike, chatLocalColor, chatRemoteColor }) => {
+  const isLocal = id % 2 === 1;
+  const entryClass = `chat-entry ${isLocal ? 'local' : 'remote'}`;
+  const chatColor = isLocal ? chatLocalColor : chatRemoteColor;
 
   return (
     <div className={entryClass}>
       <h2 className="entry-name">{sender}</h2>
       <section className="entry-bubble">
-        <p>{body}</p>
+        <p className={chatColor}>{body}</p>
         <p className="entry-time"><TimeStamp time={timeStamp} /></p>
         <button
           className="like"
@@ -29,6 +31,8 @@ ChatEntry.propTypes = {
   timeStamp: PropTypes.string.isRequired,
   liked: PropTypes.bool.isRequired,
   onToggleLike: PropTypes.func.isRequired,
+  chatLocalColor: PropTypes.string.isRequired,
+  chatRemoteColor: PropTypes.string.isRequired
 };
 
 export default ChatEntry;
