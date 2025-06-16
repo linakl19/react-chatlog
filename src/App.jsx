@@ -58,6 +58,7 @@ const App = () => {
           onToggleHeart={updateEntryLikedState}
           chatLocalColor={localColor}
           chatRemoteColor={remoteColor}
+          localSender={LOCAL_SENDER}
         />
       </main>
     </div>
