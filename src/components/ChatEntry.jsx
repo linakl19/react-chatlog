@@ -2,10 +2,8 @@ import './ChatEntry.css';
 import TimeStamp from './TimeStamp';
 import PropTypes from 'prop-types';
 
-const ChatEntry = ({ id, sender, body, timeStamp, liked, onToggleLike, chatLocalColor, chatRemoteColor }) => {
-  const isLocal = id % 2 === 1;
+const ChatEntry = ({ id, sender, body, timeStamp, liked, onToggleLike, isLocal, chatColor }) => {
   const entryClass = `chat-entry ${isLocal ? 'local' : 'remote'}`;
-  const chatColor = isLocal ? chatLocalColor : chatRemoteColor;
 
   return (
     <div className={entryClass}>
@@ -31,8 +29,8 @@ ChatEntry.propTypes = {
   timeStamp: PropTypes.string.isRequired,
   liked: PropTypes.bool.isRequired,
   onToggleLike: PropTypes.func.isRequired,
-  chatLocalColor: PropTypes.string.isRequired,
-  chatRemoteColor: PropTypes.string.isRequired
+  isLocal: PropTypes.bool.isRequired,
+  chatColor: PropTypes.string.isRequired
 };
 
 export default ChatEntry;
